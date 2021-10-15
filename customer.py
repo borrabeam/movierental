@@ -1,5 +1,5 @@
 from rental import Rental
-from movie import Movie
+from movie import Movie, PriceCode
 import logging
 
 class Customer:
@@ -38,27 +38,16 @@ class Customer:
         for rental in self.rentals:
             # compute rental change
             amount = 0
-            if rental.get_movie().get_price_code() == Movie.REGULAR:
-                # Two days for $2, additional days 1.50 each.
-                amount = 2.0
-                if rental.get_days_rented() > 2:
-                    amount += 1.5*(rental.get_days_rented()-2)
-            elif rental.get_movie().get_price_code() == Movie.CHILDRENS:
-                # Three days for $1.50, additional days 1.50 each.
-                amount = 1.5
-                if rental.get_days_rented() > 3:
-                    amount += 1.5*(rental.get_days_rented()-3)
-            elif rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-                # Straight per day charge
-                amount = 3*rental.get_days_rented()
-            else:
+            days_rented = rental.get_days_rented()
+            price_movie_code = rental.get_movie.get_price_code()
+            
+            if not isinstance(price_movie_code, PriceCode):
                 log = logging.getLogger()
-                log.error(f"Movie {rental.get_movie()} has unrecognized priceCode {rental.get_movie().get_price_code()}")
-            # award renter points
-            if rental.get_movie().get_price_code() == Movie.NEW_RELEASE:
-                frequent_renter_points += rental.get_days_rented()
+                log.error(f"Movie {rental.get_movie()} has unrecognized priceCode {price_movie_code}")
             else:
-                frequent_renter_points += 1
+                amount += price_movie_code.price(days_rented)
+                frequent_renter_points += price_movie_code.points(days_rented)
+
             #  add detail line to statement
             statement += fmt.format(rental.get_movie().get_title(), rental.get_days_rented(), amount)
             # and accumulate activity

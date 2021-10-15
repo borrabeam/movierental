@@ -1,3 +1,4 @@
+from movie import *
 class Rental:
 	"""
 	A rental of a movie by customer.
@@ -22,3 +23,9 @@ class Rental:
 
 	def get_days_rented(self):
 		return self.days_rented
+
+	def get_price(self):
+		return self.get_movie().get_price_code().price(self.days_rented)
+
+	def get_point(self):
+		return self.get_movie().get_price_code().point(self.days_rented)
