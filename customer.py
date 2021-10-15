@@ -39,7 +39,7 @@ class Customer:
             # compute rental change
             amount = 0
             days_rented = rental.get_days_rented()
-            price_movie_code = rental.get_movie.get_price_code()
+            price_movie_code = rental.get_movie().get_price_code()
             
             if not isinstance(price_movie_code, PriceCode):
                 log = logging.getLogger()
@@ -64,8 +64,8 @@ class Customer:
 if __name__ == "__main__":
     customer = Customer("Edward Snowden")
     print(customer.statement())
-    movie = Movie("Hacker Noon", Movie.REGULAR)
+    movie = Movie("Hacker Noon", PriceCode.normal)
     customer.add_rental(Rental(movie, 2))
-    movie = Movie("CitizenFour", Movie.NEW_RELEASE)
+    movie = Movie("CitizenFour", PriceCode.new_release)
     customer.add_rental(Rental(movie, 3))
     print(customer.statement())
