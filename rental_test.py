@@ -2,20 +2,24 @@ import unittest
 from customer import Customer
 from rental import Rental, PriceCode
 from movie import Movie
+from movie_catalog import MovieCatalog
 
 
 class RentalTest(unittest.TestCase):
 	
 	def setUp(self):
-		self.new_movie = Movie("Mulan", PriceCode.new_release)
-		self.regular_movie = Movie("CitizenFour", PriceCode.normal)
-		self.childrens_movie = Movie("Frozen", PriceCode.childrens)
+		self.new_movie = Movie("Mulan", 2020)
+		self.regular_movie = Movie("CitizenFour", 2010)
+		self.childrens_movie = Movie("Frozen", 2016)
+		self.catalog = MovieCatalog()
 
 	def test_movie_attributes(self):
 		"""trivial test to catch refactoring errors or change in API of Movie"""
 		m = Movie("CitizenFour", PriceCode.normal)
-		self.assertEqual("CitizenFour", m.get_title())
-		self.assertEqual(PriceCode.normal, m.get_price_code())
+		self.assertEqual("CitizenFour", self.regular_movie.get_title())
+		self.assertEqual(2010, self.regular_movie.get_year())
+		self.assertEqual("Mulan", self.new_movie.get_title())
+		self.assertEqual(2020, self.new_movie.get_year())
 
 	
 	def test_rental_price(self):
