@@ -4,14 +4,17 @@
 from movie import Movie
 from rental import Rental, PriceCode
 from customer import Customer
+from movie_catalog import MovieCatalog
 
 def make_movies():
+    catalog = MovieCatalog()
     movies = [
-        Movie("The Irishman", PriceCode.new_release),
-        Movie("CitizenFour", PriceCode.normal),
-        Movie("Frozen", PriceCode.childrens),
-        Movie("El Camino", PriceCode.new_release),
-        Movie("Particle Fever", PriceCode.normal)
+        catalog.get_movie("Mulan"),
+        catalog.get_movie("The Irishman"),
+        catalog.get_movie("CitizenFour"),
+        catalog.get_movie("Frozen",),
+        catalog.get_movie("El Camino"),
+        catalog.get_movie("Particle Fever"),
     ]
     return movies
 
