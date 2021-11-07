@@ -37,19 +37,10 @@ class Customer:
         
         for rental in self.rentals:
             # compute rental change
-            amount = 0
-            days_rented = rental.get_days_rented()
-            price_movie_code = rental.get_movie().get_price_code()
-            
-            if not isinstance(price_movie_code, PriceCode):
-                log = logging.getLogger()
-                log.error(f"Movie {rental.get_movie()} has unrecognized priceCode {price_movie_code}")
-            else:
-                amount += price_movie_code.price(days_rented)
-                frequent_renter_points += price_movie_code.points(days_rented)
+            amount = rental.get_price()
 
             #  add detail line to statement
-            statement += fmt.format(rental.get_movie().get_title(), rental.get_days_rented(), amount)
+            statement += fmt.format(rental.get_movie_title(), rental.get_days_rented(), amount)
             # and accumulate activity
             total_amount += amount
 
